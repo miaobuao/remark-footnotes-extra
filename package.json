@@ -1,0 +1,49 @@
+{
+	"name": "remark-footnotes-extra",
+	"type": "module",
+	"version": "0.1.0",
+	"files": [
+		"dist"
+	],
+	"exports": {
+		"import": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		},
+		"require": {
+			"require": "./dist/index.cjs",
+			"types": "./dist/index.d.cts"
+		}
+	},
+	"scripts": {
+		"build": "tsup src --format esm,cjs --dts --clean -d dist",
+		"dev:plugin": "tsup src --format esm --dts -d dist --watch",
+		"dev:test": "pnpm --filter test dev",
+		"dev": "run-p dev:plugin dev:test"
+	},
+	"dependencies": {
+		"unist-util-visit": "^5.0.0"
+	},
+	"devDependencies": {
+		"@types/mdast": "^4.0.4",
+		"npm-run-all2": "^7.0.1",
+		"prettier": "^3.4.2",
+		"tsup": "^8.3.5",
+		"typescript": "^5.7.2",
+		"unified": "^11.0.5"
+	},
+	"author": {
+		"name": "miaobuao",
+		"email": "miaobuao@outlook.com"
+	},
+	"homepage": "https://github.com/miaobuao/remark-footnotes-extra",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/miaobuao/remark-footnotes-extra"
+	},
+	"keywords": [
+		"remark",
+		"footnotes"
+	],
+	"license": "MIT"
+}
