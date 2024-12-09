@@ -14,20 +14,15 @@ const remarkFootnotesExtra: Plugin<any[], Root> = function () {
 		const footnoteDefinitionMap: Map<string, boolean> = new Map();
 		function createFootnoteDefinition(url: string | Link) {
 			if (typeof url === "string") {
-				var link: Link = {
-					type: "link",
-					url: url,
-					children: [
-						{
-							type: "text",
-							value: url,
-						},
-					],
+				var annotation: Text | Link = {
+					type: "text",
+					value: url,
 				};
 			} else {
-				link = url;
+				annotation = url;
 			}
-			const identifier = link.url;
+			const identifier =
+				annotation.type === "link" ? annotation.url : annotation.value;
 			if (!footnoteDefinitionMap.has(identifier)) {
 				const definition: FootnoteDefinition = {
 					type: "footnoteDefinition",
@@ -36,7 +31,7 @@ const remarkFootnotesExtra: Plugin<any[], Root> = function () {
 					children: [
 						{
 							type: "paragraph",
-							children: [link],
+							children: [annotation],
 						},
 					],
 				};

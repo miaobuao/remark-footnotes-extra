@@ -1,10 +1,22 @@
 # remark-footnotes-extra
 
-## Usage
+## Install
 
 ```sh
 pnpm add -D remark-footnotes-extra
 ``` 
+
+**Input:**
+
+```markdown
+hello world^[this is footnote]
+```
+
+**Output:**
+
+![output](assets/image-1.png)
+
+## Usage
 
 ```js
 import remarkFootnotesExtra from "remark-footnotes-extra";
@@ -19,11 +31,7 @@ const processor = unified()
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeStringify);
 
-const value = "test^[http://yangqiuyi.com]";
+const value = "hello world^[this is footnote]";
 const file = await processor.process(value);
 console.log(String(file));
 ```
-
-**output**:
-
-![exmaple-output](assets/image.png)
