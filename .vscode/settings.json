@@ -1,7 +1,15 @@
 {
 	"editor.formatOnSave": true,
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "never",
+		"source.organizeImports": "explicit",
+		"source.sortImports": "explicit"
+	},
 	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[vue]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	}
 }

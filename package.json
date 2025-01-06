@@ -7,6 +7,9 @@
 		"assets",
 		"README.md"
 	],
+	"workspaces": [
+		"playground"
+	],
 	"exports": {
 		"import": {
 			"import": "./dist/index.js",
