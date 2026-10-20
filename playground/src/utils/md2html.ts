@@ -3,7 +3,7 @@ import remarkGfm from 'remark-gfm'
 import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
 import { unified } from 'unified'
-import remarkFootnotesExtra, { PluginOptions } from '../../../src'
+import remarkFootnotesExtra, { type PluginOptions } from '../../../src'
 
 export async function md2html(
 	md: string,
@@ -14,18 +14,12 @@ export async function md2html(
 		gfm?: boolean
 	} & PluginOptions = {},
 ) {
-	const processor = gfm
-		? unified()
-				.use(remarkParse)
-				.use(remarkGfm)
-				.use(remarkFootnotesExtra, others)
-				.use(remarkRehype, { allowDangerousHtml: true })
-				.use(rehypeStringify)
-		: unified()
-				.use(remarkParse)
-				.use(remarkFootnotesExtra, others)
-				.use(remarkRehype, { allowDangerousHtml: true })
-				.use(rehypeStringify)
+	const processor = unified().use(remarkParse)
+	if (gfm) processor.use(remarkGfm)
+	processor
+		.use(remarkFootnotesExtra, others)
+		.use(remarkRehype, { allowDangerousHtml: true })
+		.use(rehypeStringify)
 	const vfile = await processor.process(md)
 	return vfile.toString()
 }
