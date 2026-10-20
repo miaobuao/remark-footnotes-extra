@@ -1,4 +1,5 @@
 import type { FootnoteReference, Link, PhrasingContent } from 'mdast'
+import { mdcSpanChildren } from './mdc-span'
 
 type CreateReference = (children: PhrasingContent[]) => FootnoteReference
 
@@ -88,6 +89,22 @@ export function transformInlineFootnotes(
 	}
 
 	for (const [index, node] of children.entries()) {
+		const span = mdcSpanChildren(node)
+		const previous = output.at(-1)
+		if (
+			!pending &&
+			span &&
+			previous?.type === 'text' &&
+			previous.value.endsWith('^')
+		) {
+			// remark-mdc parses ^[content] as text ending in ^ plus a bare span.
+			// Attributed spans remain explicit MDC components.
+			output.pop()
+			appendText(output, previous.value.slice(0, -1))
+			output.push(createReference(span))
+			changed = true
+			continue
+		}
 		if (node.type === 'text') {
 			consumeText(node.value, index)
 		} else if (pending && breakLink && isLiteralAutolink(node)) {

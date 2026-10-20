@@ -62,13 +62,35 @@ const processor = unified()
 
 Place this plugin after remark syntax plugins such as `remark-gfm`, and before `remark-rehype`. Explicit Markdown links keep their URLs intact.
 
+## Nuxt Content 3
+
+Register the plugin in `nuxt.config.ts`:
+
+```ts
+export default defineNuxtConfig({
+	content: {
+		build: {
+			markdown: {
+				remarkPlugins: {
+					'remark-footnotes-extra': {
+						options: { breakLink: true },
+					},
+				},
+			},
+		},
+	},
+})
+```
+
+Nuxt's `remark-mdc` parser turns `[content]` into an inline span. This plugin recognizes a caret followed by a bare MDC span as a footnote, so `^[footnote content]` works without escaping the opening bracket. Existing `^\[footnote content]` annotations continue to work. MDC spans with explicit attributes, such as `^[styled]{.red}`, remain components.
+
 ## Parsing behavior
 
 - Notes are collected within one inline container, such as a paragraph, heading, or table cell; they do not span separate paragraphs.
 - Brackets in text are balanced, and surrounding text is preserved. Unclosed annotations remain unchanged.
 - Code blocks and inline code are not scanned for annotations. Inline code can still be part of a note.
 - Existing and generated footnote definitions are not scanned again. Nested `^[...]` inside a note remains literal content.
-- This is an mdast transform, so other plugins must leave the annotation delimiters available in text nodes. It does not change the Markdown tokenizer or restore syntax already consumed by another parser.
+- This is an mdast transform with support for bare MDC spans. Other syntax plugins must leave the annotation delimiters available in text nodes; it does not change the Markdown tokenizer.
 
 ## Development
 

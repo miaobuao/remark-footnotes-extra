@@ -4,6 +4,7 @@
 
 - Separate inline annotation scanning, definition registration, and plugin traversal while preserving the default export and `breakLink` option.
 - Fix mixed text, formatting, links, and long citations being left in the document body.
+- Fix #1: recognize bare `remark-mdc` spans used by Nuxt Content, so inline notes no longer require an escaped opening bracket. Add the issue's complete citation as escaped and unescaped integration tests.
 - Balance literal brackets, preserve unclosed annotations, and support empty, code-only, and image-only notes.
 - Deduplicate by content structure rather than visible text alone, and avoid collisions with existing footnote identifiers.
 - Prevent generated definitions from being transformed again.
